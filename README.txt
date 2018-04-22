@@ -58,7 +58,7 @@ To run the RNA-MuTect pipeline please follow these steps:
      1. pair_ID.call_stats.txt - A call_stats file which is used as put for the next step.  
      
 2. Filtering steps (includes two matlab scripts):    
-  a. ./run_FilterRNAMutations.sh <pair_ID> <MAF_file> <call_stats_file> <MIN_ALT_COUNT> <PON_THR> <Darned_mat.mat> <Radar_mat.mat> <Exac_mat.mat> <PoN_GTEx>);
+  a. ./run_FilterRNAMutations.sh <Matlab_Runtime_Location> <pair_ID> <MAF_file> <call_stats_file> <MIN_ALT_COUNT> <PON_THR> <Darned_mat.mat> <Radar_mat.mat> <Exac_mat.mat> <PoN_GTEx>
      <pair_ID> - ID of the input pair 
      <MAF_file> - input MAF file
      <call_stats_file> - output of Step 1
@@ -67,7 +67,7 @@ To run the RNA-MuTect pipeline please follow these steps:
      <Darned_mat.mat> - input file found in directory (mat_files)
      <Radar_mat.mat> - input file found in directory (mat_files)
      <Exac_mat.mat> - input file found in directory (mat_files)
-     <PoN_GTEx> - input file that should be retreived from dbGAP. See below for an option to run this step without this file
+     <PoN_GTEx> - input file that should be retreived from dbGAP. See below for an option to run this step with this file
      
      Output:
      -------
@@ -75,7 +75,7 @@ To run the RNA-MuTect pipeline please follow these steps:
      2. pair_ID.post_filtering.txt - A MAF file containing variants remained after applying various filtering criteria
      3. pair_ID.pre_filtering_plus_info.txt - A MAF file containing all input variants with additional columns per filtering criteria, indicating whether a variant was filtered (1) or not (0) by each criteria
      
-  b. ./run_FilterRNAMutationsBasedOnDuplicateReads <pair_ID> <RNA_BAM_file> <post_filtering_MAF_file> <MIN_ALT_COUNT>
+  b. ./run_FilterRNAMutationsBasedOnDuplicateReads <Matlab_Runtime_Location> <pair_ID> <RNA_BAM_file> <post_filtering_MAF_file> <MIN_ALT_COUNT>
      <pair_ID> - ID of the input pair
      <RNA_BAM_file> - BAM file of the RNA sample
      <post_filtering_MAF_file> - A MAF file with variants remained after applying carious filtering criteria - output (2) of the previous step
@@ -86,11 +86,11 @@ To run the RNA-MuTect pipeline please follow these steps:
      1. pair_ID.post_filtering_remove_duplicates.txt - A MAF file containing variants remained after applying the duplicate reads filtering. This is the final MAF file.
 	
 *** In case the PoN is not available, (a) can be run as follows:
-    ./run_FilterRNAMutationsNoPoN <pair_ID> <MAF_file> <call_stats_file> <MIN_ALT_COUNT> <Darned_mat.mat> <Radar_mat.mat> <Exac_mat.mat>
+    ./run_FilterRNAMutationsNoPoN <Matlab_Runtime_Location> <pair_ID> <MAF_file> <call_stats_file> <MIN_ALT_COUNT> <Darned_mat.mat> <Radar_mat.mat> <Exac_mat.mat>
     <pair_ID> - ID of the input pair 
     <MAF_file> - input MAF file
     <call_stats_file> - output of Step 1
     <MIN_ALT_COUNT> - the minimal number of reads required supporting the alternate allele (MIN_ALT_COUNT=3 was used in the paper for TCGA samples and MIN_ALT_COUNT=4 for GTEx samples)
-    <Darned_mat.mat> - input file found in directory (mat_files)
-    <Radar_mat.mat> - input file found in directory (mat_files)
-    <Exac_mat.mat> - input file found in directory (mat_files)
+    <Darned_mat.mat> - input file found in directory
+    <Radar_mat.mat> - input file found in directory
+    <Exac_mat.mat> - input file found in directory

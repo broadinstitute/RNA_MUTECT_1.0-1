@@ -26,26 +26,26 @@ To run the RNA-MuTect pipeline please follow these steps:
   a. sh HiSat_realign_preprocess.sh <Dir> <MAF_file>  <RNA_BAM_file>  <Reference_genome_fasta_format> <case_sample_ID>
   b. sh HiSat_realign_preprocess.sh <Dir> <MAF_file>  <Matched-normal_DNA_BAM_file>  <Reference_genome_fasta_format> <control_sample_ID>
      
-     Each of these steps will extract from the corresponding BAM file all the reads that are aligned with the called mutations regions and will write them into fastq files.
-     A text file with the path to the new fastq files will be generated.
+  Each of these steps will extract from the corresponding BAM file all the reads that are aligned with the called mutations regions and will write them into fastq files.
+  A text file with the path to the new fastq files will be generated.
      
-     <Dir> - directory with jar files (FilterSamReads; GenomeAnalysisTK; picard; SamToFastq)
-     <MAF_file> - input MAF file
-     <RNA_BAM_file> - BAM file of the RNA sample
-     <Reference_genome_fasta_format> - reference genome in a fasta format that matches the input BAM file (hg19)
-     <case_sample_ID>/<control_sample_ID> - ID of input sample
+  <Dir> - directory with jar files (FilterSamReads; GenomeAnalysisTK; picard; SamToFastq)
+  <MAF_file> - input MAF file
+  <RNA_BAM_file> - BAM file of the RNA sample
+  <Reference_genome_fasta_format> - reference genome in a fasta format that matches the input BAM file (hg19)
+  <case_sample_ID>/<control_sample_ID> - ID of input sample
      
-    Output:
-    -------
-    1. sample_ID.rna_reads_fastq_list.list - A text file with the path to the two generated fastq files
+  Output:
+  -------
+  1. sample_ID.rna_reads_fastq_list.list - A text file with the path to the two generated fastq files
 
   c. run the HiSat2 aligner for the case sample with the parameters specified in Supplementary Table 14 and fastq files list generated in (a)
   d. run the HiSat2 aligner for the control sample with the parameters specified in Supplementary Table 14 and fastq files list generated in (b)
   
-    Output:
+  Output:
     -------
-    1. case_sample_ID.aligned.sorted_by_coord.hisat2.bam - A HiSat2 aligned BAM file for the case sample
-    2. control_sample_ID.aligned.sorted_by_coord.hisat2.bam - A HiSat2 aligned BAM file for the control sample
+  1. case_sample_ID.aligned.sorted_by_coord.hisat2.bam - A HiSat2 aligned BAM file for the case sample
+  2. control_sample_ID.aligned.sorted_by_coord.hisat2.bam - A HiSat2 aligned BAM file for the control sample
   
   
   e. Run MuTect with:
@@ -53,9 +53,11 @@ To run the RNA-MuTect pipeline please follow these steps:
      2. the -U ALLOW_N_CIGAR_READS flag
      3. An interval list containing chromosome and position of mutations listed in the input MAF file (format = 'chromosome:position', each mutation in different line)
    
-     Output:
-     -------
-     1. pair_ID.call_stats.txt - A call_stats file which is used as put for the next step.  
+  Output:
+  -------
+  1. pair_ID.call_stats.txt - A call_stats file which is used as put for the next step.  
+  
+  
      
 2. Filtering steps (includes two matlab scripts):    
   a. ./run_FilterRNAMutations.sh <Matlab_Runtime_Location> <pair_ID> <MAF_file> <call_stats_file> <MIN_ALT_COUNT> <PON_THR> <Darned_mat.mat> <Radar_mat.mat> <Exac_mat.mat> <PoN_GTEx>

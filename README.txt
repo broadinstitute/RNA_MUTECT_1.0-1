@@ -97,7 +97,7 @@ To run the RNA-MuTect pipeline please follow these steps:
      Output:
      -------
      1. pair_ID.post_filtering_remove_duplicates.txt - A MAF file containing variants remained after applying the duplicate reads filtering. This is the final MAF file.
-     Running time: ~15 minutes, for ~60 called variants
+     Running time: ~30 minutes, for ~60 called variants
      * For example MAF see: (1) UNC-BRCA-TCGA-D8-A27L_pair_RNA.post_filtering_remove_duplicates.txt, in example_output directory
 	
 *** In case the PoN is not available, (2a) can be run as follows:

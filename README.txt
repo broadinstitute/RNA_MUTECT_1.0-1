@@ -13,6 +13,8 @@ The pipeline uses the following software:
 7. Matlab
 *****************************************
 
+* Example output for the BRCA-TCGA-D8-A27L TCGA sample are provided 
+
 Input: 
 ------
 1. A matched-normal DNA BAM file

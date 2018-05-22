@@ -19,6 +19,8 @@ Input:
 2. RNA BAM file aligned with STAR. Parameters used to run STAR are found in Supplementary Table 14.
 3. A MAF file listing inital set of mutations called by MuTect with the -U ALLOW_N_CIGAR_READS flag. Other callers and filters may be used as well as long as the output file is in a MAF format.
 
+* For example MAF see: UNC-BRCA-TCGA-D8-A27L_pair_RNA.txt in example_output directory
+
 To run the RNA-MuTect pipeline please follow these steps:
 ---------------------------------------------------------
 1. Realignment step:
@@ -38,6 +40,7 @@ To run the RNA-MuTect pipeline please follow these steps:
   Output:
   -------
   1. sample_ID.rna_reads_fastq_list.list - A text file with the path to the two generated fastq files
+  Running time: ~1 hour, for ~2000 initially called variants
 
   c. run the HiSat2 aligner for the case sample with the parameters specified in Supplementary Table 14 and fastq files list generated in (a)
   d. run the HiSat2 aligner for the control sample with the parameters specified in Supplementary Table 14 and fastq files list generated in (b)
@@ -46,17 +49,19 @@ To run the RNA-MuTect pipeline please follow these steps:
     -------
   1. case_sample_ID.aligned.sorted_by_coord.hisat2.bam - A HiSat2 aligned BAM file for the case sample
   2. control_sample_ID.aligned.sorted_by_coord.hisat2.bam - A HiSat2 aligned BAM file for the control sample
-  
+  Running time: ~10 minutes, for ~2000 initially called variants
   
   e. Run MuTect with:
      1. The HiSat BAMs (generated in (c) and (d))
-     2. the -U ALLOW_N_CIGAR_READS flag
-     3. An interval list containing chromosome and position of mutations listed in the input MAF file (format = 'chromosome:position', each mutation in different line)
-   
+     2. The -U ALLOW_N_CIGAR_READS flag
+     3. The --force_output flag
+     4. An interval list containing chromosome and position of mutations listed in the input MAF file (format = 'chromosome:position', each mutation in different line)
+     
   Output:
   -------
   1. pair_ID.call_stats.txt - A call_stats file which is used as put for the next step.  
-  
+  Running time: ~1 hour, for ~2000 initially called variants
+  * For example MAF see: UNC-BRCA-TCGA-D8-A27L_pair_RNA.call_stats.txt in example_output directory
   
      
 2. Filtering steps (includes two matlab scripts):    
@@ -77,6 +82,8 @@ To run the RNA-MuTect pipeline please follow these steps:
      1. pair_ID.intersect.txt - A MAF file containing variants detcted but both aligners (STAR and HiSat2)
      2. pair_ID.post_filtering.txt - A MAF file containing variants remained after applying various filtering criteria
      3. pair_ID.pre_filtering_plus_info.txt - A MAF file containing all input variants with additional columns per filtering criteria, indicating whether a variant was filtered (1) or not (0) by each criteria
+     Running time: ~5 minutes, for ~2000 initially called variants
+     * For example MAFs see: (1) UNC-BRCA-TCGA-D8-A27L.intersect.txt; (2) UNC-BRCA-TCGA-D8-A27L.post_filtering.txt; (3) UNC-BRCA-TCGA-D8-A27L.pre_filtering_plus_info.txt, in example_output directory
      
   b. ./run_FilterRNAMutationsBasedOnDuplicateReads <Matlab_Runtime_Location> <pair_ID> <RNA_BAM_file> <post_filtering_MAF_file> <MIN_ALT_COUNT>
      <Matlab_Runtime_Location> - path to matlab runtime
@@ -84,10 +91,12 @@ To run the RNA-MuTect pipeline please follow these steps:
      <RNA_BAM_file> - BAM file of the RNA sample
      <post_filtering_MAF_file> - A MAF file with variants remained after applying carious filtering criteria - output (2) of the previous step
      <MIN_ALT_COUNT> - the minimal number of reads required supporting the alternate allele (MIN_ALT_COUNT=3 was used in the paper for TCGA samples and MIN_ALT_COUNT=4 for GTEx samples)
-
+	
      Output:
      -------
      1. pair_ID.post_filtering_remove_duplicates.txt - A MAF file containing variants remained after applying the duplicate reads filtering. This is the final MAF file.
+     Running time: ~15 minutes, for ~60 called variants
+     * For example MAF see: (1) UNC-BRCA-TCGA-D8-A27L_pair_RNA.post_filtering_remove_duplicates.txt, in example_output directory
 	
 *** In case the PoN is not available, (2a) can be run as follows:
     ./run_FilterRNAMutationsNoPoN <Matlab_Runtime_Location> <pair_ID> <MAF_file> <call_stats_file> <MIN_ALT_COUNT> <Darned_mat.mat> <Radar_mat.mat> <Exac_mat.mat>
@@ -99,3 +108,5 @@ To run the RNA-MuTect pipeline please follow these steps:
     <Darned_mat.mat> - input file found in directory (mat_files)
     <Radar_mat.mat> - input file found in directory (mat_files)
     <Exac_mat.mat> - input file found in directory (mat_files)
+
+    * For example MAFs see: (1) UNC-BRCA-TCGA-D8-A27L.intersect_no_pon.txt; (2) UNC-BRCA-TCGA-D8-A27L.post_filtering_no_pon.txt; (3) UNC-BRCA-TCGA-D8-A27L.pre_filtering_plus_info_no_pon.txt, in example_output directory

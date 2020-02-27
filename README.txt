@@ -2,6 +2,8 @@
 RNA-MuTect
 ----------
 
+Please visit https://github.com/broadinstitute/RNA_MUTECT_1.0-1 for the updates version of RNA_MUTECT
+
 *****************************************
 The pipeline uses the following software:
 1. samtools (1.2+)
@@ -20,7 +22,8 @@ Input:
 ------
 1. A matched-normal DNA BAM file
 2. RNA BAM file aligned with STAR. Parameters used to run STAR are found in Supplementary Table 12.
-3. A MAF file listing inital set of mutations called by MuTect with the '-U ALLOW_N_CIGAR_READS' flag. Other callers and filters may be used, as long as the output file is in a MAF format.
+3. A MAF file listing inital set of mutations called by MuTect with the '-U ALLOW_N_CIGAR_READS' flag. Following MuTect, Oncotator should be run to get the final MAF file: https://software.broadinstitute.org/cancer/cga/oncotator
+Other callers and filters may be used, as long as the output file is in a MAF format.
 
 * For example MAF see: example_RNA_vs_DNA_somatic_pair_RNA.txt in 'example_output' directory
 
